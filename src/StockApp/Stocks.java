@@ -7,7 +7,7 @@ public class Stocks{
 	public int Availableshares;
 	
 	Stocks(){
-		Sharename = "NA";
+		Sharename = "NAA";
 		Shareprice = 0;
 		Availableshares = 0;
 	}
