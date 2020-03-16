@@ -50,7 +50,7 @@ public class genricStockHandler{
 	}
 	
 	public Stocks fetchStocks(String Name) {
-		List<Stocks> filteredProducts = stockList.stream().filter(p-> p.Sharename==Name).collect(Collectors.toList());
+		List<Stocks> filteredProducts = this.stockList.stream().filter(p-> p.Sharename==Name).collect(Collectors.toList());
 		System.out.println(filteredProducts);
 		return filteredProducts.get(0);
 	}

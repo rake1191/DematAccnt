@@ -1,6 +1,6 @@
 package Login;
 
-import BookOfShares.SharesInPosseion;
+
 import Transaction.Transaction;
 
 import java.util.LinkedList;
@@ -12,48 +12,60 @@ import StockApp.genricStockHandler;
 
 public class User{
     
-    String user;
-    String pass;
-    double money;
+    public String user;
+    public String pass;
+    public double money;
     String uniqueID;
     int shares;
-    LinkedList<Transaction> transactionsMade;
-    public genricStockHandler UserStock;
+    LinkedList<Transaction> transactionsMade = new LinkedList<Transaction>();
+    LinkedList<Stocks> UsersStocks = new LinkedList<Stocks>();
+    public genricStockHandler userHandler = new genricStockHandler(UsersStocks);
     //LinkedList<Stocks> sharesOwned; created Outside
-    
+	public LinkedList<Transaction> transactionReport;
+	
     
     public User(String user, String pass, double money, String uniqueID, int shares) {
           this.user = user;
           this.pass = pass;
-          this.money = money;
+          this.setMoney(money);
           this.uniqueID = uniqueID;
           this.shares = shares;
     }
     
-	  void depositMoney(User user, double amount) {
-	        user.money += amount;
+	  public void depositMoney(User user, double amount) {
+	        user.setMoney(user.getMoney() + amount);
 	  }
 		  
-	  boolean withdrawMoney(User user, double amount) {
-	        if(user.money < amount) {
+	  public boolean withdrawMoney(User user, double amount) {
+	        if(user.getMoney() < amount) {
 	               System.out.println("Insufficient balance in the account");
 	               return false;
 	        }
 	        else {
-	               user.money -= amount;
-	               System.out.println("Amount has been debitted");
+	               user.setMoney(user.getMoney() - amount);
 	               return true;
 	        }
 	  }
 	  
 	  double getBalance(User user) {
-	        return user.money;
+	        return user.getMoney();
 	  }
 
   
     @Override
     public String toString() {
-          return "User [user=" + user + ", money=" + money + ", uniqueID=" + uniqueID +", shares=" + shares +"]";
+          return "UserName - " + user + "\n" 
+        		  + "Account Balance - " + getMoney() + "\n" 
+        		  + "Account Number - " + uniqueID + "\n"
+        		  + "No of transactions - " + transactionsMade.size() + "\n" ;
     }
+
+	public double getMoney() {
+		return money;
+	}
+
+	public void setMoney(double money) {
+		this.money = money;
+	}
     
 }

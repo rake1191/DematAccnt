@@ -10,47 +10,34 @@ import java.util.Scanner;
 import StockApp.Stocks;
 import StockApp.StockDatabase;
 import StockApp.genricStockHandler;
-import User.User;
+//import User.User;
 
 public class TransactionAPI {
        
        StockDatabase stocksDb = new StockDatabase();
 //     StockHandler BSE;
        Stocks bseStock, userStock;
-       User user;
+       Login.User user;
+       public genricStockHandler BSE,userHandler;
        
-       TransactionAPI(){
-    	   Stocks s1 = new Stocks("Amazon",100,500);
-    	   Stocks s2 = new Stocks("Flipkart",90,500);
-    	   Stocks s3 = new Stocks("Walmart",80,500);
-    	   Stocks s4 = new Stocks("Jabong",70,500);
-    	   Stocks s5 = new Stocks("Myntra",60,500);
-    	   Stocks s6 = new Stocks("koovs",50,500);
-    	   Stocks s7 = new Stocks("nike",40,500);
+       public TransactionAPI(Login.User user,genricStockHandler BSE){
+    	   
+    	this.user = user;
+    	this.BSE = BSE;
         
-        LinkedList<Stocks> stockDBList = new LinkedList<Stocks>();
-        stockDBList.add(s1);
-        stockDBList.add(s2);
-        stockDBList.add(s3);
-        stockDBList.add(s4);
-        stockDBList.add(s5);
-        stockDBList.add(s6);
-        stockDBList.add(s7);
-        
-//        BSE = new StockHandler(stockDBList);
        }
        
-       void depositMoney(User user, double amount) {
-             user.money += amount;
+       void depositMoney(Login.User userdetail, double amount) {
+             userdetail.money += amount;
        }
        
-       boolean withdrawMoney(User user, double amount) {
-             if(user.money < amount) {
+       boolean withdrawMoney(Login.User userdetail, double amount) {
+             if(userdetail.money < amount) {
                     System.out.println("Insufficient balance in the account");
                     return false;
              }
              else {
-                    user.money -= amount;
+                    userdetail.money -= amount;
                     System.out.println("Amount has been debitted");
                     return true;
              }
@@ -73,7 +60,7 @@ public class TransactionAPI {
         
   }
   
-  public void buyShares(User user, genricStockHandler BSE) {
+  public void buyShares(Login.User userdetail, genricStockHandler BSE) {
        
       int sharesToBuy;
       double amountToBeDebited;
@@ -88,6 +75,8 @@ public class TransactionAPI {
       System.out.println("Enter the number of shares you'd like to buy:");
       sharesToBuy = in.nextInt();
       
+      //System.out.println(bseStock);//coming out as null //need to troubleshoot
+      
       if(sharesToBuy > bseStock.Availableshares) {
              System.out.println("You cannot buy shares more than the available shares. Please re-try again");
 //             mainMenu(); //it will go to main menu option to reselect buy option
@@ -97,17 +86,17 @@ public class TransactionAPI {
              double finalAmount=transactionCharge(amountToBeDebited);
              System.out.println("Total amount to pay for buying "+sharesToBuy+" shares is \\u20b9"+finalAmount);
              
-             if(user.money > finalAmount) {
+             if(userdetail.money > finalAmount) {
              if(BSE.updateSharesInMarket(shareName, "Remove", sharesToBuy)) {
-                            withdrawMoney(user, finalAmount);
-                                   if(user.userHandler.checkShare(shareName)) {
-                                  if(user.userHandler.updateSharesInMarket(shareName, "Add", sharesToBuy))
+                            withdrawMoney(userdetail, finalAmount);
+                                   if(userdetail.userHandler.checkShare(shareName)) {
+                                  if(userdetail.userHandler.updateSharesInMarket(shareName, "Add", sharesToBuy))
                                          System.out.println("Shares updated to your account");
                             }
                             else {
-                                  user.userHandler.stockList.add(new Stocks(shareName,bseStock.Shareprice,sharesToBuy));
+                                  userdetail.userHandler.stockList.add(new Stocks(shareName,bseStock.Shareprice,sharesToBuy));
                                   System.out.println("Shares added to your account");
-                                  user.transactionReport.add(new Transaction(101, "Buy", LocalDate.now(), LocalTime.now(), shareName, bseStock.Shareprice, sharesToBuy, finalAmount));
+                                  userdetail.transactionReport.add(new Transaction(101, "Buy", LocalDate.now(), LocalTime.now(), shareName, bseStock.Shareprice, sharesToBuy, finalAmount));
        //                      mainMenu(); //it will go to main menu option to reselect buy option 
                             }
                            
@@ -119,7 +108,7 @@ public class TransactionAPI {
       }
   }
 
-public void sellShares(User user, StockDatabase stocksDb) {
+public void sellShares(Login.User userdetail, genricStockHandler bSE2) {
       
          int sharesToSell;
       double amountToBeCredited;
@@ -127,8 +116,8 @@ public void sellShares(User user, StockDatabase stocksDb) {
       
       System.out.println("Enter the name of the company:");
       String shareName = in.next();
-      if(user.userHandler.checkShare(shareName))
-         userStock = user.userHandler.fetchStocks(shareName);
+      if(userdetail.userHandler.checkShare(shareName))
+         userStock = userdetail.userHandler.fetchStocks(shareName);
       else
          System.out.println("Share not available");
 //      mainMenu(); //it will go to main menu option to reselect buy option
@@ -143,10 +132,10 @@ public void sellShares(User user, StockDatabase stocksDb) {
              amountToBeCredited = userStock.Shareprice*sharesToSell;
              double finalAmount=transactionCharge(amountToBeCredited);
              System.out.println("Total amount to be credited for selling "+sharesToSell+" shares is \\u20b9"+finalAmount);
-             if(stocksDb.updateSharesInMarket(shareName, "Add", sharesToSell) && user.userHandler.updateSharesInMarket(shareName, "Remove", sharesToSell)) {
-             depositMoney(user, finalAmount); //calls deposit function to deposit the money to user's wallet
+             if(bSE2.updateSharesInMarket(shareName, "Add", sharesToSell) && userdetail.userHandler.updateSharesInMarket(shareName, "Remove", sharesToSell)) {
+             depositMoney(userdetail, finalAmount); //calls deposit function to deposit the money to user's wallet
              System.out.println("Shares sold successful");
-             user.transactionReport.add(new Transaction(101, "Sell", LocalDate.now(), LocalTime.now(), shareName, bseStock.Shareprice, sharesToSell, finalAmount));
+             userdetail.transactionReport.add(new Transaction(101, "Sell", LocalDate.now(), LocalTime.now(), shareName, bseStock.Shareprice, sharesToSell, finalAmount));
              }
                  
              
@@ -233,14 +222,15 @@ public void sellShares(User user, StockDatabase stocksDb) {
         stockDBList.add(s7);
         
         genricStockHandler BSE = new genricStockHandler(stockDBList);
+        BSE.checkShare("Amazon");
 
         
         
 
              
-                 String sDate1="31/12/1998";  
-                 Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);  
-                 System.out.println(sDate1+"\t"+date1);
+         String sDate1="31/12/1998";  
+         Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);  
+         System.out.println(sDate1+"\t"+date1);
        }
        
 

@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 import StockApp.genricStockHandler;
 import Transaction.Transaction;
+import StockApp.Stocks;
 
 public class User {
        
@@ -14,8 +15,8 @@ public class User {
        public String uniqueID;
        public int shares;
        public LinkedList<Transaction> transactionReport;
-//     public LinkedList<Stock> userStockList;
-       public genricStockHandler userHandler;
+       public LinkedList<Stocks> userStockList = new LinkedList<Stocks>();
+       public genricStockHandler userHandler = new genricStockHandler(userStockList);
        
     public User(String user, String pass, Double money, String uniqueID, int shares) {
           this.user = user;
@@ -23,6 +24,7 @@ public class User {
           this.money = money;
           this.uniqueID = uniqueID;
           this.shares = shares;
+          
     }
     
     @Override
