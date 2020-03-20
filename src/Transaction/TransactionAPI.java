@@ -1,11 +1,13 @@
 package Transaction;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import StockApp.Stocks;
 import StockApp.StockDatabase;
@@ -60,7 +62,7 @@ public class TransactionAPI {
         
   }
   
-  public void buyShares(Login.User userdetail, genricStockHandler BSE) {
+  public boolean buyShares(Login.User userdetail, genricStockHandler BSE) {
        
       int sharesToBuy;
       double amountToBeDebited;
@@ -70,11 +72,11 @@ public class TransactionAPI {
       String shareName = in.nextLine();
       if(BSE.checkShare(shareName))
       {
-    	  
     	  bseStock = BSE.fetchStocks(shareName);
        	 System.out.println(bseStock);
       }
       else {
+    	  return false;
 //        mainMenu(); //it will go to main menu option to reselect buy option    	  
       }
              
@@ -90,7 +92,7 @@ public class TransactionAPI {
       else {
              amountToBeDebited = bseStock.Shareprice*sharesToBuy;
              double finalAmount=transactionCharge(amountToBeDebited);
-             System.out.println("Total amount to pay for buying "+sharesToBuy+" shares is \\u20b9"+finalAmount);
+             System.out.println("Total amount to pay for buying "+sharesToBuy+" shares is "+finalAmount);
              
              if(userdetail.money > finalAmount) {
              if(BSE.updateSharesInMarket(shareName, "Remove", sharesToBuy)) {
@@ -114,9 +116,10 @@ public class TransactionAPI {
                                 
              }
       }
+	return false;
   }
 
-public void sellShares(Login.User userdetail, genricStockHandler bSE2) {
+public boolean sellShares(Login.User userdetail, genricStockHandler bSE2) {
       
          int sharesToSell;
       double amountToBeCredited;
@@ -127,7 +130,11 @@ public void sellShares(Login.User userdetail, genricStockHandler bSE2) {
       if(userdetail.userHandler.checkShare(shareName))
          userStock = userdetail.userHandler.fetchStocks(shareName);
       else
-         System.out.println("Share not available");
+      {
+    	  System.out.println("You can not sell this stock since you do not own any stocks from "+shareName);
+    	  return false;
+      }
+      
 //      mainMenu(); //it will go to main menu option to reselect buy option
       System.out.println("Enter the number of shares you'd like to sell:");
       sharesToSell = in.nextInt();
@@ -147,7 +154,8 @@ public void sellShares(Login.User userdetail, genricStockHandler bSE2) {
              }
                  
              
-      }           
+      }       
+      return false;
 }
 
 
@@ -166,33 +174,34 @@ public void sellShares(Login.User userdetail, genricStockHandler bSE2) {
              }
 }
 
- public static void viewTransactionReportForShare(LinkedList<Transaction> transactionReport){
-       
-       Scanner sc =  new Scanner(System.in);
-       System.out.println("Enter the start date:");
-       System.out.println("Enter the start year:");
-       int startYear = sc.nextInt();
-             System.out.println("---------------------------------------------");
-             System.out.println("          Transaction Report");
-             System.out.println("---------------------------------------------");
-             for(Transaction t : transactionReport) {
-                    System.out.println(t);
-             }
-}
 
- public static void viewTransactionReport(LinkedList<Transaction> transactionReport){
-       
-       Scanner sc =  new Scanner(System.in);
-       System.out.println("Enter the start date:");
-       System.out.println("Enter the start year:");
-       int startYear = sc.nextInt();
-             System.out.println("---------------------------------------------");
-             System.out.println("          Transaction Report");
-             System.out.println("---------------------------------------------");
-             for(Transaction t : transactionReport) {
-                    System.out.println(t);
-             }
-}
+ 
+public static void viewTransactionReportForShare(LinkedList<Transaction> transactionReport){
+	 
+		Scanner sc =  new Scanner(System.in);
+		System.out.print(">>Enter the share name: ");
+		String shareName = sc.nextLine();
+		List<Transaction> filteredTransactions = transactionReport.stream().filter(t-> t.shareName.equals(shareName)).collect(Collectors.toList());
+	    if(filteredTransactions.size()>=1) {
+	    	System.out.println("*********************************************");
+	    	System.out.println("          Transaction Report");
+	    	System.out.println("*********************************************");
+	    	for(Transaction t : filteredTransactions)
+	    			System.out.println(t);	
+	    }else {
+	        System.out.println("No Transactions available for the given share !");
+	    }
+	 }
+	 
+ public static void viewAllTransactions(LinkedList<Transaction> transactionReport){
+		 
+			System.out.println("*********************************************");
+			System.out.println("          Transaction Report");
+			System.out.println("*********************************************");
+			for(Transaction t : transactionReport) {
+				System.out.println(t);
+			}
+	 }
 
 //       public static void main(String[] args)throws Exception {
 //             

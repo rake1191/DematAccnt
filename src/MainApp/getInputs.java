@@ -250,6 +250,9 @@ public class getInputs {
                break;
         case '6':
                System.out.println("View transaction report");
+               TransactionAPI.viewAllTransactions(userdetail.transactionReport);
+               
+               
                LoginMenu(userdetail, trasactV1);
                break;
         case '7':

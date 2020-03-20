@@ -17,11 +17,11 @@ public class User{
     public double money;
     String uniqueID;
     int shares;
-    LinkedList<Transaction> transactionsMade = new LinkedList<Transaction>();
+    //LinkedList<Transaction> transactionsMade = new LinkedList<Transaction>();
     LinkedList<Stocks> UsersStocks = new LinkedList<Stocks>();
     public genricStockHandler userHandler = new genricStockHandler(UsersStocks);
     //LinkedList<Stocks> sharesOwned; created Outside
-	public LinkedList<Transaction> transactionReport;
+	public LinkedList<Transaction> transactionReport = new LinkedList<Transaction>();
 	
     
     public User(String user, String pass, double money, String uniqueID, int shares) {
@@ -57,7 +57,7 @@ public class User{
           return "UserName - " + user + "\n" 
         		  + "Account Balance - " + getMoney() + "\n" 
         		  + "Account Number - " + uniqueID + "\n"
-        		  + "No of transactions - " + transactionsMade.size() + "\n" ;
+        		  + "No of transactions - " + transactionReport.size() + "\n" ;
     }
 
 	public double getMoney() {
