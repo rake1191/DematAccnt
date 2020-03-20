@@ -189,8 +189,10 @@ public class getInputs {
         System.out.println("3 - Withdraw Money");
         System.out.println("4 - Buy transaction");
         System.out.println("5 - Sell transaction");
-        System.out.println("6 - View transaction report");
-        System.out.println("7 - LogOut");
+        System.out.println("6 - View All transactions");
+        System.out.println("7 - View transaction by date");
+        System.out.println("8 - View transaction by Stocks");
+        System.out.println("9 - LogOut");
 
         char maincaseno = scan.next().charAt(0);
         
@@ -249,13 +251,18 @@ public class getInputs {
                LoginMenu(userdetail, trasactV1);
                break;
         case '6':
-               System.out.println("View transaction report");
                TransactionAPI.viewAllTransactions(userdetail.transactionReport);
-               
-               
                LoginMenu(userdetail, trasactV1);
                break;
         case '7':
+            TransactionAPI.viewTransactionReportForDate(userdetail.transactionReport);
+            LoginMenu(userdetail, trasactV1);
+            break;
+        case '8':
+            TransactionAPI.viewTransactionReportForShare(userdetail.transactionReport);
+            LoginMenu(userdetail, trasactV1);
+            break;
+        case '9':
             System.out.println("Succesfully Logged Out");
             mainMenu();
             break;
