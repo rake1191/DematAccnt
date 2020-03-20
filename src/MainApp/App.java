@@ -4,7 +4,6 @@ import StockApp.Stocks;
 
 import Transaction.Transaction;
 import Login.User;
-import Login.LinkedlistUser;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

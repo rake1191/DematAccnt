@@ -186,52 +186,52 @@ public void sellShares(Login.User userdetail, genricStockHandler bSE2) {
              }
 }
 
-       public static void main(String[] args)throws Exception {
-             
-             LinkedList<Transaction> transactionReport = new LinkedList<Transaction>();
-             
-             
-             
-//           Transaction t1 = new Transaction(101, "Buy", LocalDate.of(2019, 12, 12), LocalTime.of(03, 35));
-//           Transaction t2 = new Transaction(102, "Buy", LocalDate.of(2019, 12, 20), LocalTime.of(04, 20));
-//           Transaction t3 = new Transaction(103, "Sell", LocalDate.of(2020, 01, 15), LocalTime.of(9, 40));
-//           Transaction t4 = new Transaction(104, "Buy", LocalDate.of(2020, 02, 12), LocalTime.of(02, 15));
-//           
-//           transactionReport.add(t1);
-//           transactionReport.add(t2);
-//           transactionReport.add(t3);
-//           transactionReport.add(t4);
-//           
-//           TransactionAPI.viewTransactionReport(transactionReport);
-             
-             Stocks s1 = new Stocks("Amazon",100,500);
-             Stocks s2 = new Stocks("Flipkart",90,500);
-             Stocks s3 = new Stocks("Walmart",80,500);
-             Stocks s4 = new Stocks("Jabong",70,500);
-             Stocks s5 = new Stocks("Myntra",60,500);
-             Stocks s6 = new Stocks("koovs",50,500);
-             Stocks s7 = new Stocks("nike",40,500);
-        
-        LinkedList<Stocks> stockDBList = new LinkedList<Stocks>();
-        stockDBList.add(s1);
-        stockDBList.add(s2);
-        stockDBList.add(s3);
-        stockDBList.add(s4);
-        stockDBList.add(s5);
-        stockDBList.add(s6);
-        stockDBList.add(s7);
-        
-        genricStockHandler BSE = new genricStockHandler(stockDBList);
-        BSE.checkShare("Amazon");
-
-        
-        
-
-             
-         String sDate1="31/12/1998";  
-         Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);  
-         System.out.println(sDate1+"\t"+date1);
-       }
+//       public static void main(String[] args)throws Exception {
+//             
+//             LinkedList<Transaction> transactionReport = new LinkedList<Transaction>();
+//             
+//             
+//             
+////           Transaction t1 = new Transaction(101, "Buy", LocalDate.of(2019, 12, 12), LocalTime.of(03, 35));
+////           Transaction t2 = new Transaction(102, "Buy", LocalDate.of(2019, 12, 20), LocalTime.of(04, 20));
+////           Transaction t3 = new Transaction(103, "Sell", LocalDate.of(2020, 01, 15), LocalTime.of(9, 40));
+////           Transaction t4 = new Transaction(104, "Buy", LocalDate.of(2020, 02, 12), LocalTime.of(02, 15));
+////           
+////           transactionReport.add(t1);
+////           transactionReport.add(t2);
+////           transactionReport.add(t3);
+////           transactionReport.add(t4);
+////           
+////           TransactionAPI.viewTransactionReport(transactionReport);
+//             
+//             Stocks s1 = new Stocks("Amazon",100,500);
+//             Stocks s2 = new Stocks("Flipkart",90,500);
+//             Stocks s3 = new Stocks("Walmart",80,500);
+//             Stocks s4 = new Stocks("Jabong",70,500);
+//             Stocks s5 = new Stocks("Myntra",60,500);
+//             Stocks s6 = new Stocks("koovs",50,500);
+//             Stocks s7 = new Stocks("nike",40,500);
+//        
+//        LinkedList<Stocks> stockDBList = new LinkedList<Stocks>();
+//        stockDBList.add(s1);
+//        stockDBList.add(s2);
+//        stockDBList.add(s3);
+//        stockDBList.add(s4);
+//        stockDBList.add(s5);
+//        stockDBList.add(s6);
+//        stockDBList.add(s7);
+//        
+//        genricStockHandler BSE = new genricStockHandler(stockDBList);
+//        BSE.checkShare("Amazon");
+//
+//        
+//        
+//
+//             
+//         String sDate1="31/12/1998";  
+//         Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);  
+//         System.out.println(sDate1+"\t"+date1);
+//       }
        
 
 }
