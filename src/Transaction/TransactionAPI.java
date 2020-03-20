@@ -67,11 +67,17 @@ public class TransactionAPI {
       Scanner in = new Scanner(System.in);
       
       System.out.println("Enter the name of the company:");
-      String shareName = in.next();
+      String shareName = in.nextLine();
       if(BSE.checkShare(shareName))
-         bseStock = BSE.fetchStocks(shareName);
-      else
-//        mainMenu(); //it will go to main menu option to reselect buy option             
+      {
+    	  
+    	  bseStock = BSE.fetchStocks(shareName);
+       	 System.out.println(bseStock);
+      }
+      else {
+//        mainMenu(); //it will go to main menu option to reselect buy option    	  
+      }
+             
       System.out.println("Enter the number of shares you'd like to buy:");
       sharesToBuy = in.nextInt();
       
@@ -101,9 +107,11 @@ public class TransactionAPI {
                             }
                            
               }
-             else
-                     System.out.println("Failed");
-//               mainMenu(); //it will go to main menu option to reselect buy option               
+             else {
+            	    System.out.println("Failed");
+//                  mainMenu(); //it will go to main menu option to reselect buy option
+             }
+                                
              }
       }
   }

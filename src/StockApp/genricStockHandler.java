@@ -16,7 +16,8 @@ public class genricStockHandler{
 	public boolean updateSharesInMarket(String Sharename, String TransactionType, int quantity){
 		
 		for(Stocks stocks : stockList) {
-			if(stocks.Sharename==Sharename) {
+			
+			if(stocks.Sharename.equals(Sharename)) {
 				if(TransactionType=="Add") {
 					if(quantity<=0) {
 						System.out.println("**Please Enter Quantity as more than 1**\n");
@@ -45,18 +46,18 @@ public class genricStockHandler{
 		}
 	}
 	
-	public void listSpecificShares(String ShareName) {
-		stockList.stream().filter(p-> p.Sharename==ShareName).forEach(share->System.out.println(share.showShareDetails()));
+	public void listSpecificShares(String Name) {
+		stockList.stream().filter(p-> p.Sharename.equals(Name)).forEach(share->System.out.println(share.showShareDetails()));
 	}
 	
 	public Stocks fetchStocks(String Name) {
-		List<Stocks> filteredProducts = this.stockList.stream().filter(p-> p.Sharename==Name).collect(Collectors.toList());
+		List<Stocks> filteredProducts = this.stockList.stream().filter(p-> p.Sharename.equals(Name)).collect(Collectors.toList());
 		System.out.println(filteredProducts);
 		return filteredProducts.get(0);
 	}
 	
 	public boolean checkShare(String Name) {
-		List<Stocks> filteredProducts = stockList.stream().filter(p-> p.Sharename==Name).collect(Collectors.toList());
+		List<Stocks> filteredProducts = stockList.stream().filter(p-> p.Sharename.equals(Name)).collect(Collectors.toList());
 		if(filteredProducts.size()==1) {
 			System.out.println("Stock Available");
 			return true;
